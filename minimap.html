@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Minimap Viewer</title>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+    <style>
+        #map {
+            height: 400px; /* Tinggi peta */
+            width: 100%; /* Lebar peta */
+        }
+    </style>
+</head>
+<body>
+    <h1>Minimap Viewer</h1>
+    <div id="map"></div>
+
+    <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+    <script>
+        // Inisialisasi peta
+        var map = L.map('map').setView([-7.250445, 112.768845], 13); // Koordinat Surabaya
+
+        // Tambahkan layer peta
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            maxZoom: 19,
+            attribution: '© OpenStreetMap'
+        }).addTo(map);
+
+        // Tambahkan marker
+        var marker = L.marker([-7.250445, 112.768845]).addTo(map);
+        marker.bindPopup("<b>Surabaya!</b><br>Ini adalah kota Surabaya.").openPopup();
+    </script>
+</body>
+</html>
