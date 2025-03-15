@@ -1,0 +1,2 @@
+# minimap
+bljrr ngetikk gusyyy
