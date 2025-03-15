@@ -1,36 +1,57 @@
 <!DOCTYPE html>
-<html lang="id">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Minimap Viewer</title>
-    <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+    <title>Minimap Example</title>
     <style>
-        /* Mengatur tinggi dan lebar peta */
         #map {
-            height: 100vh; /* Tinggi peta 100% dari viewport */
-            width: 100%; /* Lebar peta 100% */
+            height: 500px; /* Ukuran peta utama */
+            width: 100%;
+        }
+        #minimap {
+            height: 150px; /* Ukuran minimap */
+            width: 150px;
+            position: absolute;
+            bottom: 10px;
+            right: 10px;
+            border: 2px solid #000;
+            z-index: 1;
         }
     </style>
 </head>
 <body>
-    <h1>Minimap Viewer</h1>
-    <div id="map"></div>
 
-    <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
-    <script>
-        // Inisialisasi peta dengan koordinat dan zoom level
-        var map = L.map('map').setView([-7.250445, 112.768845], 13); // Koordinat Surabaya
+<div id="map"></div>
+<div id="minimap"></div>
 
-        // Tambahkan layer peta dari OpenStreetMap
-        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-            maxZoom: 19,
-            attribution: '© OpenStreetMap'
-        }).addTo(map);
+<script>
+    function initMap() {
+        // Peta utama
+        const mainMap = new google.maps.Map(document.getElementById("map"), {
+            center: { lat: -6.200001, lng: 106.816666 }, // Koordinat Jakarta
+            zoom: 12,
+        });
 
-        // Tambahkan marker di lokasi yang ditentukan
-        var marker = L.marker([-7.250445, 112.768845]).addTo(map);
-        marker.bindPopup("<b>Surabaya!</b><br>Ini adalah kota Surabaya.").openPopup();
-    </script>
+        // Minimap
+        const miniMap = new google.maps.Map(document.getElementById("minimap"), {
+            center: mainMap.getCenter(),
+            zoom: 15,
+            disableDefaultUI: true, // Menonaktifkan kontrol UI pada minimap
+        });
+
+        // Sinkronisasi posisi minimap dengan peta utama
+        mainMap.addListener("bounds_changed", () => {
+            miniMap.setCenter(mainMap.getCenter());
+            miniMap.setZoom(mainMap.getZoom() + 3); // Zoom minimap lebih besar
+        });
+    }
+</script>
+
+<!-- Tambahkan script Google Maps API -->
+<script async defer
+    src="https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY&callback=initMap">
+</script>
+
 </body>
 </html>
