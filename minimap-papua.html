@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Minimap Papua Example</title>
+    <style>
+        #map {
+            height: 500px; /* Ukuran peta utama */
+            width: 100%;
+        }
+        #minimap {
+            height: 150px; /* Ukuran minimap */
+            width: 150px;
+            position: absolute;
+            bottom: 10px;
+            right: 10px;
+            border: 2px solid #000;
+            z-index: 1;
+        }
+    </style>
+</head>
+<body>
+
+<div id="map"></div>
+<div id="minimap"></div>
+
+<script>
+    function initMap() {
+        // Peta utama dengan pusat di Papua
+        const mainMap = new google.maps.Map(document.getElementById("map"), {
+            center: { lat: -4.5, lng: 135.5 }, // Koordinat Papua
+            zoom: 6, // Zoom level untuk peta utama
+        });
+
+        // Minimap
+        const miniMap = new google.maps.Map(document.getElementById("minimap"), {
+            center: mainMap.getCenter(),
+            zoom: 9, // Zoom level untuk minimap
+            disableDefaultUI: true, // Menonaktifkan kontrol UI pada minimap
+        });
+
+        // Sinkronisasi posisi minimap dengan peta utama
+        mainMap.addListener("bounds_changed", () => {
+            miniMap.setCenter(mainMap.getCenter());
+            miniMap.setZoom(mainMap.getZoom() + 3); // Zoom minimap lebih besar
+        });
+    }
+</script>
+
+<!-- Tambahkan script Google Maps API -->
+<script async defer
+    src="https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY&callback=initMap">
+</script>
+
+</body>
+</html>
