@@ -6,9 +6,10 @@
     <title>Minimap Viewer</title>
     <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
     <style>
+        /* Mengatur tinggi dan lebar peta */
         #map {
-            height: 400px; /* Tinggi peta */
-            width: 100%; /* Lebar peta */
+            height: 100vh; /* Tinggi peta 100% dari viewport */
+            width: 100%; /* Lebar peta 100% */
         }
     </style>
 </head>
@@ -18,16 +19,16 @@
 
     <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
     <script>
-        // Inisialisasi peta
+        // Inisialisasi peta dengan koordinat dan zoom level
         var map = L.map('map').setView([-7.250445, 112.768845], 13); // Koordinat Surabaya
 
-        // Tambahkan layer peta
+        // Tambahkan layer peta dari OpenStreetMap
         L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
             maxZoom: 19,
             attribution: '© OpenStreetMap'
         }).addTo(map);
 
-        // Tambahkan marker
+        // Tambahkan marker di lokasi yang ditentukan
         var marker = L.marker([-7.250445, 112.768845]).addTo(map);
         marker.bindPopup("<b>Surabaya!</b><br>Ini adalah kota Surabaya.").openPopup();
     </script>
